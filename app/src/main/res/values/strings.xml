@@ -1,0 +1,7 @@
+﻿<resources>
+    <string name="app_name">SnapCrop</string>
+    <string name="copied_and_deleted">Copied to clipboard &amp; screenshot deleted</string>
+    <string name="copied_only">Copied to clipboard</string>
+    <string name="saved_to_gallery">Saved to Screenshots</string>
+    <string name="screenshot_deleted">Screenshot deleted</string>
+</resources>
