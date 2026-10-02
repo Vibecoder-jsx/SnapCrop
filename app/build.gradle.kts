@@ -1,4 +1,6 @@
-﻿plugins {
+﻿import java.util.Properties
+
+plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
@@ -12,8 +14,8 @@ android {
         applicationId = "com.snapcrop.app"
         minSdk = 29
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -24,15 +26,26 @@ android {
         }
     }
 
+    // The release key never lives in the repo. It comes from keystore.properties
+    // (local builds, gitignored) or SNAPCROP_KEYSTORE* env vars (CI). Without
+    // either, release builds come out unsigned, which is what F-Droid's own
+    // build server and contributors need.
+    val keystoreProps = Properties().apply {
+        rootProject.file("keystore.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+    }
+    val keystorePath = System.getenv("SNAPCROP_KEYSTORE") ?: keystoreProps.getProperty("storeFile")
+    val keystorePassword = System.getenv("SNAPCROP_KEYSTORE_PASSWORD") ?: keystoreProps.getProperty("storePassword")
+
     signingConfigs {
-        create("release") {
-            storeFile = file("${rootDir}/snapcrop-release.jks")
-            storePassword = "snapcrop123"
-            keyAlias = "snapcrop"
-            keyPassword = "snapcrop123"
-            enableV1Signing = true
-            enableV2Signing = true
-            enableV3Signing = true
+        if (keystorePath != null) {
+            create("release") {
+                storeFile = rootProject.file(keystorePath)
+                storePassword = keystorePassword
+                keyAlias = System.getenv("SNAPCROP_KEY_ALIAS") ?: keystoreProps.getProperty("keyAlias", "snapcrop")
+                keyPassword = keystorePassword
+                enableV2Signing = true
+                enableV3Signing = true
+            }
         }
     }
 
@@ -44,7 +57,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.findByName("release")
         }
         debug {
             isMinifyEnabled = false

@@ -1,0 +1,3 @@
+SnapCrop is now available on F-Droid.
+
+If you have version 1.0.0, uninstall it once before installing this version. Future updates install normally.
