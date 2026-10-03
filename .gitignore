@@ -14,7 +14,22 @@ captures/
 *.ap_
 *.aab
 
-# Keep standalone installer in root for easy direct download
-!SnapCrop.apk
+*.apk
+
+# Signing keys and their passwords
+keystore.properties
+*.jks
+*.keystore
+*.p12
+
+# F-Droid repo build output
+/fdroid/repo
+/fdroid/archive
+/fdroid/tmp
+/fdroid/config.yml
+/fdroid/keystore.p12
+/fdroid/icon.png
+/fdroid/metadata/com.snapcrop.app/
+/site
 
 *.hprof

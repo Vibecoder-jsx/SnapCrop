@@ -1,0 +1,13 @@
+SnapCrop brings the iOS "Crop, Copy & Delete" screenshot flow to Android and GrapheneOS.
+
+Take a screenshot, tap Edit and pick SnapCrop. Drag the corners to crop, then tap <b>Copy & Delete</b>. The cropped image goes straight to your clipboard, ready to paste into any chat or notes app, and the original screenshot is removed so it never clutters your gallery.
+
+<b>Features</b>
+<ul>
+<li>Copy & Delete: crop, copy to the clipboard and remove the original in one tap</li>
+<li>Save or Delete: keep the cropped version, or throw away an accidental screenshot</li>
+<li>Nothing runs in the background. SnapCrop only opens when you edit a screenshot</li>
+<li>Disappears from Recent Apps as soon as you are done</li>
+<li>Fully offline. SnapCrop has no internet access</li>
+<li>Works with GrapheneOS Storage Scopes, so you can limit it to your Screenshots folder</li>
+</ul>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnapCrop for F-Droid</title>
+<style>
+  :root { --bg: #ffffff; --fg: #1a1a1a; --muted: #5b5b5b; --accent: #1f8f55; --card: #f3f5f4; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #121212; --fg: #ececec; --muted: #a8a8a8; --accent: #3ddc84; --card: #1e1e1e; }
+  }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.5 system-ui, sans-serif; }
+  main { max-width: 34rem; margin: 0 auto; padding: 2.5rem 16px; }
+  header { display: flex; align-items: center; gap: 1rem; }
+  header img { width: 64px; height: 64px; border-radius: 14px; }
+  h1 { margin: 0; font-size: 1.6rem; }
+  header p { margin: 0; color: var(--muted); }
+  .button { display: inline-block; margin: 1.5rem 0 0.5rem; padding: 0.8rem 1.4rem; border-radius: 999px;
+            background: var(--accent); color: #fff; font-weight: 600; text-decoration: none; }
+  @media (prefers-color-scheme: dark) { .button { color: #0b2b19; } }
+  .card { background: var(--card); border-radius: 12px; padding: 1rem 1.2rem; margin-top: 1.5rem; }
+  .qr { display: block; width: 200px; max-width: 100%; margin: 0.5rem auto; background: #fff; padding: 8px; border-radius: 8px; }
+  code { overflow-wrap: anywhere; font-size: 0.85rem; }
+  ol { padding-left: 1.2rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="repo/icons/icon.png" alt="">
+    <div>
+      <h1>SnapCrop</h1>
+      <p>Crop a screenshot, copy it and delete the original in one tap</p>
+    </div>
+  </header>
+
+  <p>Add SnapCrop to F-Droid to install it and get updates as soon as they're released.</p>
+
+  <a class="button" href="@ADD_URL@">Add to F-Droid</a>
+  <p style="color: var(--muted); font-size: 0.9rem">Tap this on your phone with F-Droid installed.</p>
+
+  <div class="card">
+    <strong>On another device?</strong> Scan this with your phone's camera or F-Droid's scanner.
+    <img class="qr" src="repo-qr.svg" alt="QR code for adding the SnapCrop repo">
+  </div>
+
+  <div class="card">
+    <strong>Adding it by hand</strong>
+    <ol>
+      <li>In F-Droid, open <b>Settings → Repositories</b> and tap <b>+</b>.</li>
+      <li>Enter this address:<br><code>@REPO_URL@</code></li>
+      <li>Check that F-Droid shows this fingerprint:<br><code>@FINGERPRINT@</code></li>
+    </ol>
+  </div>
+
+  <p style="margin-top: 2rem"><a href="https://github.com/Vibecoder-jsx/SnapCrop">Source code</a> · <a href="https://github.com/Vibecoder-jsx/SnapCrop/releases">Download the APK directly</a></p>
+</main>
+</body>
+</html>

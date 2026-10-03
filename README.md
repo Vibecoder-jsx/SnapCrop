@@ -40,13 +40,30 @@ Standard Android and GrapheneOS do not offer this out-of-the-box, leaving thousa
 
 ## 📥 Installation
 
-Download the pre-compiled installer:
-* **[SnapCrop.apk](SnapCrop.apk)** (~1.4 MB)
+### F-Droid (recommended)
 
-Install it using your file manager or transfer it to your phone using [LocalSend](https://localsend.org/) or ADB:
+Get SnapCrop through F-Droid to receive updates automatically:
+
+1. Open **[apps.nextcolor.org](https://apps.nextcolor.org/)** on your phone and tap **Add to F-Droid**.
+2. Search for **SnapCrop** in F-Droid and install it.
+
+### Direct download
+
+Download the latest APK from **[Releases](https://github.com/Vibecoder-jsx/SnapCrop/releases/latest)** and install it with your file manager, [LocalSend](https://localsend.org/) or ADB:
 ```bash
-adb install SnapCrop.apk
+adb install SnapCrop-v1.0.1.apk
 ```
+
+### Is my copy genuine?
+
+If you use [AppVerifier](https://github.com/soupslurpr/AppVerifier), paste this in to check:
+
+```
+com.snapcrop.app
+02:6B:4B:9F:D1:FA:4A:FA:BB:7D:8A:7A:8E:EF:5C:02:49:D2:58:E5:6E:9A:DD:93:33:84:00:FC:D5:C3:2C:C7
+```
+
+> **Have version 1.0.0?** Uninstall it once, then install the new version. Future updates install normally.
 
 ---
 
@@ -60,7 +77,7 @@ cd SnapCrop
 ./gradlew assembleRelease
 ```
 The output APK will be generated at:
-`app/build/outputs/apk/release/app-release.apk`
+`app/build/outputs/apk/release/app-release-unsigned.apk`
 
 ---
 

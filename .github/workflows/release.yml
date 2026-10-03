@@ -1,0 +1,125 @@
+name: Release
+
+# Push a tag like v1.0.1 (matching versionName in app/build.gradle.kts) to
+# publish a signed GitHub Release and refresh the F-Droid repo on GitHub Pages.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      # The custom domain set in Settings > Pages. People save this address in
+      # F-Droid when they add the repo, so it should never change.
+      SITE_URL: https://apps.nextcolor.org
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Check tag matches versionName
+        if: github.ref_type == 'tag'
+        run: |
+          version=$(sed -n 's/^ *versionName = "\(.*\)"/\1/p' app/build.gradle.kts)
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match versionName $version in app/build.gradle.kts"
+            exit 1
+          fi
+
+      - name: Unpack signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.SNAPCROP_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::error::The SNAPCROP_KEYSTORE_BASE64 secret is missing. See RELEASING.md."
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/snapcrop.p12"
+
+      - name: Build signed APK
+        if: github.ref_type == 'tag'
+        env:
+          SNAPCROP_KEYSTORE: ${{ runner.temp }}/snapcrop.p12
+          SNAPCROP_KEYSTORE_PASSWORD: ${{ secrets.SNAPCROP_KEYSTORE_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleRelease
+          cp app/build/outputs/apk/release/app-release.apk "SnapCrop-$GITHUB_REF_NAME.apk"
+
+      - name: Publish GitHub Release
+        if: github.ref_type == 'tag'
+        run: |
+          gh release create "$GITHUB_REF_NAME" "SnapCrop-$GITHUB_REF_NAME.apk" \
+            --title "SnapCrop $GITHUB_REF_NAME" \
+            --notes-file "fastlane/metadata/android/en-US/changelogs/$(sed -n 's/^ *versionCode = \([0-9]*\)/\1/p' app/build.gradle.kts).txt"
+
+      - name: Install fdroidserver
+        run: pipx install --include-deps fdroidserver==2.4.5
+
+      - name: Build F-Droid repo
+        working-directory: fdroid
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.SNAPCROP_KEYSTORE_PASSWORD }}
+        run: |
+          cp "$RUNNER_TEMP/snapcrop.p12" keystore.p12
+          cat > config.yml <<EOF
+          repo_url: $SITE_URL/repo
+          repo_name: SnapCrop
+          repo_description: Official SnapCrop releases.
+          repo_icon: icon.png
+          archive_older: 0
+          repo_keyalias: repo
+          keystore: keystore.p12
+          keystorepass: $KEYSTORE_PASSWORD
+          keypass: $KEYSTORE_PASSWORD
+          EOF
+          chmod 600 config.yml
+
+          mkdir -p repo metadata/com.snapcrop.app
+          cp ../fastlane/metadata/android/en-US/images/icon.png icon.png
+          cp -r ../fastlane/metadata/android/en-US metadata/com.snapcrop.app/
+
+          # Every published release goes into the repo so people can roll back
+          for tag in $(gh release list --limit 100 --json tagName -q '.[].tagName'); do
+            gh release download "$tag" --pattern '*.apk' --dir repo --clobber
+          done
+
+          fdroid update --verbose
+
+          # Landing page with an "Add to F-Droid" link and QR code
+          fingerprint=$(keytool -list -v -keystore keystore.p12 -storepass "$KEYSTORE_PASSWORD" -alias repo \
+            | sed -n 's/^.*SHA256: //p' | tr -d ':')
+          repo_url="$SITE_URL/repo"
+          add_url="fdroidrepos://${SITE_URL#https://}/repo?fingerprint=$fingerprint"
+          mkdir -p ../site
+          cp -r repo ../site/
+          sed -e "s|@REPO_URL@|$repo_url|" -e "s|@ADD_URL@|$add_url|" -e "s|@FINGERPRINT@|$fingerprint|" \
+            index.html > ../site/index.html
+          qr --factory=svg-path "$repo_url?fingerprint=$fingerprint" > ../site/repo-qr.svg
+          rm keystore.p12 config.yml icon.png
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v5
