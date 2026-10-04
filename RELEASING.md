@@ -3,7 +3,7 @@
 Every release is signed with the SnapCrop release key and published in two places:
 
 * **GitHub Releases**, for people who download the APK directly
-* **The SnapCrop F-Droid repo** at [apps.nextcolor.org](https://apps.nextcolor.org/), so F-Droid users get updates automatically
+* **The NextColor Apps F-Droid repo** at [apps.nextcolor.org](https://apps.nextcolor.org/), so F-Droid users get updates automatically
 
 Both happen on their own when you push a version tag.
 

@@ -82,9 +82,9 @@ jobs:
         run: |
           cp "$RUNNER_TEMP/snapcrop.p12" keystore.p12
           cat > config.yml <<EOF
-          repo_url: $SITE_URL/repo
-          repo_name: SnapCrop
-          repo_description: Official SnapCrop releases.
+          repo_url: $SITE_URL/fdroid/repo
+          repo_name: NextColor Apps
+          repo_description: Official F-Droid repository for NextColor apps.
           repo_icon: icon.png
           archive_older: 0
           repo_keyalias: repo
@@ -108,10 +108,10 @@ jobs:
           # Landing page with an "Add to F-Droid" link and QR code
           fingerprint=$(keytool -list -v -keystore keystore.p12 -storepass "$KEYSTORE_PASSWORD" -alias repo \
             | sed -n 's/^.*SHA256: //p' | tr -d ':')
-          repo_url="$SITE_URL/repo"
-          add_url="fdroidrepos://${SITE_URL#https://}/repo?fingerprint=$fingerprint"
-          mkdir -p ../site
-          cp -r repo ../site/
+          repo_url="$SITE_URL/fdroid/repo"
+          add_url="fdroidrepos://${SITE_URL#https://}/fdroid/repo?fingerprint=$fingerprint"
+          mkdir -p ../site/fdroid
+          cp -r repo ../site/fdroid/
           sed -e "s|@REPO_URL@|$repo_url|" -e "s|@ADD_URL@|$add_url|" -e "s|@FINGERPRINT@|$fingerprint|" \
             index.html > ../site/index.html
           qr --factory=svg-path "$repo_url?fingerprint=$fingerprint" > ../site/repo-qr.svg
