@@ -1,0 +1,3 @@
+The app ID is now org.nextcolor.snapcrop.
+
+Android installs this version as a separate app next to 1.0.1 or older. Uninstall the old one afterwards, and pick SnapCrop again the next time Android asks which app to edit a screenshot with. Future updates install normally.

@@ -1,4 +1,4 @@
-﻿package com.snapcrop.app.ui
+﻿package org.nextcolor.snapcrop.ui
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

@@ -1,4 +1,4 @@
-﻿package com.snapcrop.app
+﻿package org.nextcolor.snapcrop
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -26,8 +26,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.snapcrop.app.ui.SnapCropTheme
-import com.snapcrop.app.util.PermissionHelper
+import org.nextcolor.snapcrop.ui.SnapCropTheme
+import org.nextcolor.snapcrop.util.PermissionHelper
 import java.io.File
 import java.io.FileOutputStream
 
@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity() {
 
         val testUri = androidx.core.content.FileProvider.getUriForFile(
             this,
-            "com.snapcrop.app.fileprovider",
+            "org.nextcolor.snapcrop.fileprovider",
             cacheFile
         )
 

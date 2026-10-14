@@ -1,4 +1,4 @@
-﻿package com.snapcrop.app.util
+﻿package org.nextcolor.snapcrop.util
 
 import android.content.ContentUris
 import android.content.ContentValues

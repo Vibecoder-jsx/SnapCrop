@@ -51,7 +51,7 @@ Get SnapCrop through F-Droid to receive updates automatically:
 
 Download the latest APK from **[Releases](https://github.com/Vibecoder-jsx/SnapCrop/releases/latest)** and install it with your file manager, [LocalSend](https://localsend.org/) or ADB:
 ```bash
-adb install SnapCrop-v1.0.1.apk
+adb install SnapCrop-v2.0.0.apk
 ```
 
 ### Is my copy genuine?
@@ -59,11 +59,11 @@ adb install SnapCrop-v1.0.1.apk
 If you use [AppVerifier](https://github.com/soupslurpr/AppVerifier), paste this in to check:
 
 ```
-com.snapcrop.app
+org.nextcolor.snapcrop
 02:6B:4B:9F:D1:FA:4A:FA:BB:7D:8A:7A:8E:EF:5C:02:49:D2:58:E5:6E:9A:DD:93:33:84:00:FC:D5:C3:2C:C7
 ```
 
-> **Have version 1.0.0?** Uninstall it once, then install the new version. Future updates install normally.
+> **Have version 1.0.1 or older?** Uninstall it after installing the new version. Android installs 2.0.0 as a separate app because the app ID changed.
 
 ---
 

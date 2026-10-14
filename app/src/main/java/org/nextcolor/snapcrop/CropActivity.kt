@@ -1,4 +1,4 @@
-﻿package com.snapcrop.app
+﻿package org.nextcolor.snapcrop
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -26,10 +26,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
-import com.snapcrop.app.ui.CropView
-import com.snapcrop.app.ui.SnapCropTheme
-import com.snapcrop.app.util.ClipboardHelper
-import com.snapcrop.app.util.MediaStoreHelper
+import org.nextcolor.snapcrop.ui.CropView
+import org.nextcolor.snapcrop.ui.SnapCropTheme
+import org.nextcolor.snapcrop.util.ClipboardHelper
+import org.nextcolor.snapcrop.util.MediaStoreHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

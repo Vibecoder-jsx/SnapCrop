@@ -1,4 +1,4 @@
-﻿package com.snapcrop.app.ui
+﻿package org.nextcolor.snapcrop.ui
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Canvas

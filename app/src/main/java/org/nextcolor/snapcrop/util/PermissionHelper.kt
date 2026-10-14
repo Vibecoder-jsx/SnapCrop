@@ -1,4 +1,4 @@
-﻿package com.snapcrop.app.util
+﻿package org.nextcolor.snapcrop.util
 
 import android.Manifest
 import android.app.Activity

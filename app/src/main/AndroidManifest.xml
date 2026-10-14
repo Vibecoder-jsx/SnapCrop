@@ -50,7 +50,7 @@
         <!-- FileProvider for secure Clipboard Image sharing -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.snapcrop.app.fileprovider"
+            android:authorities="org.nextcolor.snapcrop.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

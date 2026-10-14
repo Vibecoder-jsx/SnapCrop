@@ -1,4 +1,4 @@
-﻿package com.snapcrop.app.util
+﻿package org.nextcolor.snapcrop.util
 
 import android.content.ClipData
 import android.content.ClipDescription
@@ -14,7 +14,7 @@ import java.io.FileOutputStream
 
 object ClipboardHelper {
     private const val TAG = "ClipboardHelper"
-    private const val AUTHORITY = "com.snapcrop.app.fileprovider"
+    private const val AUTHORITY = "org.nextcolor.snapcrop.fileprovider"
 
     fun copyBitmapToClipboard(context: Context, bitmap: Bitmap): Boolean {
         return try {
